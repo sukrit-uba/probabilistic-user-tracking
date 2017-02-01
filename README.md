@@ -1,4 +1,15 @@
 # probabilistic-user-tracking
+## Description
+data_prep.py does the preprocessing converting string and categorical features into numerical features for the ML alogorithm to work on.
+
+cluster.py contains the main algorithm described below.
+
+data.csv and data2.csv are the files generated after preprocessing, these files are used in cluster.py.
+
+pre_proc.py can be ignored, it contains trial code.
+
+result_n files contain the users grouped together into clusters where the threshold for the similarity score is set as n.
+
 ## Agglomerative Hierarchical Clustering and Pairwise similarity
 The approach taken here is to group the whole dataset into clusters first where the candidates of data from the same user are grouped into the same cluster. Agglomerative hierarchical clustering fits our use case because it does not require to specify the number of clusters to group the data into beforehand. Then a pairwise similarity is computed for all possible pairs inside each cluster. The data is grouped into clusters first because to compute the pairwise similarity for each possible pair from the bigger data set can be very computationally expensive. After computing the similarity score a graph is formed where the nodes are represented by each row from the dataset. Then we form edges to connect the nodes which have a high similarity score. Then all the possible unique users can be retrieved from the graph as connected subgraphs where each subgraph represents a unique user.  <br>
 ## Preprocessing of data
@@ -61,3 +72,6 @@ After finding all the pairwise similarity scores inside of all the clusters, we 
 
 In the image above we can see that the 3 nodes at the top are connected to each other because they have a high value of similarity score, so the connected subgraph can be considered as a single unique user. 
 But the nodes at the bottom are not connected to any other nodes as they are not similar to any other nodes, so they are considered as 2 different unique users. 
+
+## References
+Haoran Li, Yu Zhu, Yang Zhao, Cookieless Cross-device Matching System
