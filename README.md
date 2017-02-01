@@ -56,6 +56,6 @@ For example cip_id is quite important in determining a unique user so we assign 
 
 ## Constructing a graph and finding unique users
 After finding all the pairwise similarity scores inside of all the clusters, we further construct a graph where the nodes in the graph are all the data points(rows) from our dataset. Then we connect the nodes with high similarity scores. After that we can retrieve all the connected sub graphs as unique users. 
-
+![alt text](https://github.com/sukrit-uba/probabilistic-user-tracking/blob/master/graph.png "Logo Title Text 1")
 In the image above we can see that the 3 nodes at the top are connected to each other because they have a high value of similarity score, so the connected subgraph can be considered as a single unique user. 
 But the nodes at the bottom are not connected to any other nodes as they are not similar to any other nodes, so they are considered as 2 different unique users. 
