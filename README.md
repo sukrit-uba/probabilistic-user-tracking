@@ -7,13 +7,15 @@ Out of all the features from the dataset, the following were used as they reveal
 * server ip
 * cs-uri-stem
 * c-user-agent
-* x-ec_custom-1 (site user had visited)<br>
+* x-ec_custom-1 (site user had visited)
+
 All these features were first converted into numericals values. This was done by first finding all the unique values from the above columns and then saving them in a list. Then the following fields were created:
 * cip_id from client ip
 * sip_id from server ip
 * uri_id from cs-uri-stem
 * user_agent_id from c-user-agent
-* site_id from x-ec_custom-1<br>
+* site_id from x-ec_custom-1
+
 Values were inserted into the new columns as the index of the particular value from the respective columns from which they were created. The indexes are taken from the lists with the unique values from the respective columns.<br>
 A new column named “device_id” is also created. Firstly, all the unique pairs of cip_id and user_agent_id are retrieved and stored in a list. Then values are inserted into the “device_id” column as the index of the respective cip_id and user_agent_id pairs.<br>
 So the following features are used for further processing:<br>
@@ -25,7 +27,7 @@ So the following features are used for further processing:<br>
 * device_id
 
 ## Clustering algorithm
-The data is first scaled to a similar range to feed into the clustering algorithm. Agglomerative hierarchical clustering is used which groups the data into a hierarchy of clusters using a certain distance metric. The following link contains a tutorial for the algorithm: https://joernhees.de/blog/2015/08/26/scipy-hierarchical-clustering-and-dendrogram-tutorial/
+The data is first scaled to a similar range to feed into the clustering algorithm. Agglomerative hierarchical clustering is used which groups the data into a hierarchy of clusters using a certain distance metric. The following link contains a tutorial for the algorithm: https://joernhees.de/blog/2015/08/26/scipy-hierarchical-clustering-and-dendrogram-tutorial/<br>
 The scipy library contains the hierarchical clustering algorithm as described in the tutorial. 
 The algorithm groups data into clusters which contain a single point up to a big cluster which contains all the data points.  
 ![alt text](https://github.com/sukrit-uba/probabilistic-user-tracking/blob/master/dendrogram2.png "Logo Title Text 1")
