@@ -32,4 +32,27 @@ The scipy library contains the hierarchical clustering algorithm as described in
 The algorithm groups data into clusters which contain a single point up to a big cluster which contains all the data points.  
 ![alt text](https://github.com/sukrit-uba/probabilistic-user-tracking/blob/master/dendrogram2.png "Logo Title Text 1")
 
+As seen in the above dendrogram a hierarchy of clusters is created. In the dendrogram horizontal lines are cluster merges, vertical lines tell us which clusters/labels were part of merge forming that new cluster and heights of the horizontal lines tell us about the distance that needed to be "bridged" to form the new cluster. The dendrogram can be truncated at a certain point like in the figure using the black horizontal line. The line is plotted perpendicular to the y-axis at the point approx (0,16). Using this concept we can retrieve the clusters above the line and perform pairwise similarity inside those clusters.
+
+## Pairwise similarity
+After performing clustering we get clusters which gives us a smaller search space for performing pairwise similarity. Pairwise similarity can be calculated using the following functions:<br>
+```
+def match(a,b):
+    if a == b:
+        return 1
+    else:
+        return 0
+        
+def similarity_score(x,y):
+    score = [None]*len(x)
+    for i in range(len(x)):
+        score[i] = match(x[i],y[i])
+    """cip_id,sip_id,uri_id,user_agent_id,site_id,device_id"""    
+    weights = [2,0.5,0.5,2,1,2]
+    #weights = [8,0,0,0,0,0]  
+    return ((np.array(score)*np.array(weights)).sum())/8.0
+```
+The function similarity_score accepts a pair of users, then using the function match we check if their features are the same returning 1 if they match and returning 0 otherwise. Then the list score is multiplied by a list of weights which represent the importance of each attribute in defining the similarity score.<br>
+For example cip_id is quite important in determining a unique user so we assign it a higher weight. And attributes such as sip_id and uri_id contribute less in determining a unique user, so we assign it a lower weight. <br>
+Then the scores are summed together and divided by the max possible score to get the normalized similarity score.<br>
 
