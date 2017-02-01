@@ -10,6 +10,9 @@ pre_proc.py can be ignored, it contains trial code.
 
 result_n files contain the users grouped together into clusters where the threshold for the similarity score is set as n.
 
+## Dependencies
+Anaconda 4.3.0 - python3.5
+
 ## Agglomerative Hierarchical Clustering and Pairwise similarity
 The approach taken here is to group the whole dataset into clusters first where the candidates of data from the same user are grouped into the same cluster. Agglomerative hierarchical clustering fits our use case because it does not require to specify the number of clusters to group the data into beforehand. Then a pairwise similarity is computed for all possible pairs inside each cluster. The data is grouped into clusters first because to compute the pairwise similarity for each possible pair from the bigger data set can be very computationally expensive. After computing the similarity score a graph is formed where the nodes are represented by each row from the dataset. Then we form edges to connect the nodes which have a high similarity score. Then all the possible unique users can be retrieved from the graph as connected subgraphs where each subgraph represents a unique user.  <br>
 ## Preprocessing of data
@@ -41,6 +44,7 @@ So the following features are used for further processing:<br>
 The data is first scaled to a similar range to feed into the clustering algorithm. Agglomerative hierarchical clustering is used which groups the data into a hierarchy of clusters using a certain distance metric. The following link contains a tutorial for the algorithm: https://joernhees.de/blog/2015/08/26/scipy-hierarchical-clustering-and-dendrogram-tutorial/<br>
 The scipy library contains the hierarchical clustering algorithm as described in the tutorial. 
 The algorithm groups data into clusters which contain a single point up to a big cluster which contains all the data points.  
+
 ![alt text](https://github.com/sukrit-uba/probabilistic-user-tracking/blob/master/dendrogram2.png "Logo Title Text 1")
 
 As seen in the above dendrogram a hierarchy of clusters is created. In the dendrogram horizontal lines are cluster merges, vertical lines tell us which clusters/labels were part of merge forming that new cluster and heights of the horizontal lines tell us about the distance that needed to be "bridged" to form the new cluster. The dendrogram can be truncated at a certain point like in the figure using the black horizontal line. The line is plotted perpendicular to the y-axis at the point approx (0,16). Using this concept we can retrieve the clusters above the line and perform pairwise similarity inside those clusters.
