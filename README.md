@@ -48,11 +48,14 @@ def similarity_score(x,y):
     for i in range(len(x)):
         score[i] = match(x[i],y[i])
     """cip_id,sip_id,uri_id,user_agent_id,site_id,device_id"""    
-    weights = [2,0.5,0.5,2,1,2]
-    #weights = [8,0,0,0,0,0]  
+    weights = [2,0.5,0.5,2,1,2] 
     return ((np.array(score)*np.array(weights)).sum())/8.0
 ```
 The function similarity_score accepts a pair of users, then using the function match we check if their features are the same returning 1 if they match and returning 0 otherwise. Then the list score is multiplied by a list of weights which represent the importance of each attribute in defining the similarity score.<br>
-For example cip_id is quite important in determining a unique user so we assign it a higher weight. And attributes such as sip_id and uri_id contribute less in determining a unique user, so we assign it a lower weight. <br>
-Then the scores are summed together and divided by the max possible score to get the normalized similarity score.<br>
+For example cip_id is quite important in determining a unique user so we assign it a higher weight. And attributes such as sip_id and uri_id contribute less in determining a unique user, so we assign it a lower weight. Then the scores are summed together and divided by the max possible score to get the normalized similarity score.<br>
 
+## Constructing a graph and finding unique users
+After finding all the pairwise similarity scores inside of all the clusters, we further construct a graph where the nodes in the graph are all the data points(rows) from our dataset. Then we connect the nodes with high similarity scores. After that we can retrieve all the connected sub graphs as unique users. 
+
+In the image above we can see that the 3 nodes at the top are connected to each other because they have a high value of similarity score, so the connected subgraph can be considered as a single unique user. 
+But the nodes at the bottom are not connected to any other nodes as they are not similar to any other nodes, so they are considered as 2 different unique users. 
